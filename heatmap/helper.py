@@ -40,19 +40,19 @@ def load_dataset(name="data.csv"):
             os.path.dirname(os.path.dirname(__file__)),
             "geojson",
             name
-        )
+        ),
+        dtype=str
     )
 
 
 def gen_mock_csv():
-    geojson = geojosn_loader('georef-germany-gemeinde (1).geojson')
-    result = list()
-    for value in geojson['features']:
-        zip_ = value['properties']['gem_code']
-        if zip_ not in result:
-            result.append(zip_)
-    value = abs(np.random.normal(size=len(result)))
-    df = pd.DataFrame(list(zip(result, value)), columns=['zip', 'value'])
+    geojson = geojosn_loader('gemeinden_simplify0 (1).geojson')['features']
+    df = pd.DataFrame(columns=['key', 'value'])
+    for data in geojson:
+        df = df.append({
+            'key': data['properties'].get('destatis', {'RS': data['properties']['RS_0']})['RS'],
+            'value': data['properties'].get('destatis', {'population': 0})['population']
+        }, ignore_index=True)
     df.to_csv('data.csv', index=False)
 
 

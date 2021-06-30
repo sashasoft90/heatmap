@@ -8,13 +8,14 @@ from heatmap.helper import geojosn_loader, load_dataset
 token = open("../.mapbox_token").read()  # you will need your own token
 
 df = load_dataset('data.csv')
-geojson = geojosn_loader('georef-germany-gemeinde.geojson')
+# geojson = geojosn_loader('georef-germany-gemeinde.geojson')
+geojson = geojosn_loader('gemeinden_simplify0 (1).geojson')
 
 fig = go.Figure(go.Choroplethmapbox(
     geojson=geojson,
-    locations=df.zip,
+    locations=df.key,
     z=df.value,
-    featureidkey="properties.gem_code",
+    featureidkey="properties.RS_0",
     marker_opacity=0.5,
     zmin=0))
 fig.update_layout(
