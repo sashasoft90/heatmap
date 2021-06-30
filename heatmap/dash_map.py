@@ -3,18 +3,18 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objects as go
 
-from heatmap.helper import geojosn_loader, data_mock
+from heatmap.helper import geojosn_loader, load_dataset
 
 token = open("../.mapbox_token").read()  # you will need your own token
 
-df = data_mock()
+df = load_dataset('data.csv')
 geojson = geojosn_loader('georef-germany-gemeinde.geojson')
 
 fig = go.Figure(go.Choroplethmapbox(
     geojson=geojson,
     locations=df.zip,
     z=df.value,
-    featureidkey="properties.krs_code",
+    featureidkey="properties.gem_code",
     marker_opacity=0.5,
     zmin=0))
 fig.update_layout(
@@ -27,7 +27,7 @@ fig.update_layout(
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
-    html.P("Candidate:"),
+    # html.P("Candidate:"),
     dcc.Graph(figure=fig),
 ])
 
