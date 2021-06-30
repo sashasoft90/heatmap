@@ -3,3 +3,7 @@ pylint
 
 coverage
 html-testRunner
+
+dash
+pandas
+numpy
