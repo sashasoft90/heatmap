@@ -7,3 +7,5 @@ html-testRunner
 dash
 pandas
 numpy
+
+shapely

@@ -130,3 +130,5 @@ dmypy.json
 
 .idea
 .mapbox_token
+*.geojson
+/geojson/*.csv
